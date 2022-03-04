@@ -16,5 +16,10 @@ namespace BusinessLogicLayer
             var countries = ds.GetCountries();
             return countries;
         }
+
+        public void AddNewBook(Book book)
+        {
+            ds.AddNewBook(book);
+        }
     }
 }

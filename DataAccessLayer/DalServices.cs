@@ -20,5 +20,21 @@ namespace DataAccessLayer
                 return countries;
             }
         }
+
+        public void AddNewBook(Book book)
+        {
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@Title", book.Title);
+            param.Add("@Author", book.Author);
+            param.Add("@Description", book.Description);
+            param.Add("@Price", book.Price);
+            param.Add("@CountryId", book.CountryId);
+            param.Add("@DatePublished", book.DatePublished);
+
+            using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
+            {
+                connection.Execute("spAddNewBook", param, commandType:CommandType.StoredProcedure);
+            }
+        }
     }
 }
