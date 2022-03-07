@@ -20,7 +20,14 @@ namespace DataAccessLayer
                 return countries;
             }
         }
-
+        public List<Book> GetBooks()
+        {
+            using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
+            {
+                var books = connection.Query<Book>("spGetAllBooks", commandType: CommandType.StoredProcedure).ToList();
+                return books;
+            }
+        }
         public void AddNewBook(Book book)
         {
             DynamicParameters param = new DynamicParameters();
@@ -34,6 +41,24 @@ namespace DataAccessLayer
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
                 connection.Execute("spAddNewBook", param, commandType:CommandType.StoredProcedure);
+            }
+        }
+        
+        public List<DtoBook> GetBooksByCountry(int id)
+        {
+            DynamicParameters param = new DynamicParameters();
+            param.Add ("@id", id);
+
+            using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
+            {
+                var books = connection.Query<DtoBook,Country,DtoBook>("spGetPerCountry",
+                    (dtobook, country) => 
+                    {
+                        dtobook.CountryId = country;
+                        return dtobook;
+                    },
+                    param , commandType:CommandType.StoredProcedure).ToList();
+                return books;
             }
         }
     }

@@ -24,6 +24,8 @@ namespace BookWinFormUI
             BllServices bllServices = new BllServices();
             var allCountries = bllServices.GetCountries();
             cmbCountry.DataSource = allCountries;
+            dtgData.DataSource = bllServices.GetBooks();
+
         }
 
         private void btnAddBook_Click(object sender, EventArgs e)
@@ -38,7 +40,33 @@ namespace BookWinFormUI
             newBook.DatePublished = Convert.ToDateTime(dtpDatePublished.Text);
             newBook.CountryId = cmbCountry.SelectedIndex+1; // cunku ulkeleri 1'den baslattik, ama index herzaman 0'dan baslar.
 
-            bllServices.AddNewBook(newBook);
+            if (bllServices.AddNewBook(newBook))
+            {
+                MessageBox.Show("Record added to the Database");
+            }
+            else
+            {
+                MessageBox.Show("There is a problem to save the record. Try again.");
+                // bunu ekledik cunku bllservice'de tarihle alakali if/else kullandik. 
+                // orada verecek hatayi da burada gostertmis olduk.
+            }
+
+            // bllServices.AddNewBook(newBook); bunu sildik cunku program hata verse de bilgiyi ekliyordu.
+
+            dtgData.DataSource = bllServices.GetBooks(); // DB'deki veriyi Datagrid tablosunda gosterme
+                                                         // bundan once sql'de sp olusturduk
+                                                         // bu sp'yi once dalservices'da sonra da bllservices'da cagirdik.
+            
+
+        }
+
+        private void btnGetPerCountry_Click(object sender, EventArgs e)
+        {
+            BllServices bllServices = new BllServices();
+            var index = cmbCountry.SelectedIndex+1;
+            var books = bllServices.GetBooksByCountry(index);
+            dtgData.DataSource = null;
+            dtgData.DataSource = books;
         }
     }
 }

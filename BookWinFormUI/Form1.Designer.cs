@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblAuthor = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
@@ -37,12 +38,13 @@
             this.txtAuthor = new System.Windows.Forms.TextBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.txtPrice = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dtgData = new System.Windows.Forms.DataGridView();
             this.btnAddBook = new System.Windows.Forms.Button();
             this.cmbCountry = new System.Windows.Forms.ComboBox();
             this.lblCountries = new System.Windows.Forms.Label();
             this.dtpDatePublished = new System.Windows.Forms.DateTimePicker();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.btnGetPerCountry = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgData)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -123,22 +125,22 @@
             this.txtPrice.Size = new System.Drawing.Size(100, 22);
             this.txtPrice.TabIndex = 8;
             // 
-            // dataGridView1
+            // dtgData
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(44, 213);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(755, 159);
-            this.dataGridView1.TabIndex = 10;
+            this.dtgData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgData.Location = new System.Drawing.Point(44, 213);
+            this.dtgData.Name = "dtgData";
+            this.dtgData.RowHeadersWidth = 51;
+            this.dtgData.RowTemplate.Height = 24;
+            this.dtgData.Size = new System.Drawing.Size(755, 159);
+            this.dtgData.TabIndex = 10;
             // 
             // btnAddBook
             // 
             this.btnAddBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddBook.Location = new System.Drawing.Point(44, 394);
             this.btnAddBook.Name = "btnAddBook";
-            this.btnAddBook.Size = new System.Drawing.Size(127, 23);
+            this.btnAddBook.Size = new System.Drawing.Size(208, 48);
             this.btnAddBook.TabIndex = 11;
             this.btnAddBook.Text = "Add New Book";
             this.btnAddBook.UseVisualStyleBackColor = true;
@@ -169,16 +171,28 @@
             this.dtpDatePublished.Size = new System.Drawing.Size(155, 22);
             this.dtpDatePublished.TabIndex = 14;
             // 
+            // btnGetPerCountry
+            // 
+            this.btnGetPerCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGetPerCountry.Location = new System.Drawing.Point(294, 396);
+            this.btnGetPerCountry.Name = "btnGetPerCountry";
+            this.btnGetPerCountry.Size = new System.Drawing.Size(218, 46);
+            this.btnGetPerCountry.TabIndex = 15;
+            this.btnGetPerCountry.Text = "Get Book Per Country";
+            this.btnGetPerCountry.UseVisualStyleBackColor = true;
+            this.btnGetPerCountry.Click += new System.EventHandler(this.btnGetPerCountry_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 566);
+            this.Controls.Add(this.btnGetPerCountry);
             this.Controls.Add(this.dtpDatePublished);
             this.Controls.Add(this.lblCountries);
             this.Controls.Add(this.cmbCountry);
             this.Controls.Add(this.btnAddBook);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dtgData);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.txtAuthor);
@@ -188,10 +202,11 @@
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.lblAuthor);
             this.Controls.Add(this.lblTitle);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,11 +223,12 @@
         private System.Windows.Forms.TextBox txtAuthor;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dtgData;
         private System.Windows.Forms.Button btnAddBook;
         private System.Windows.Forms.ComboBox cmbCountry;
         private System.Windows.Forms.Label lblCountries;
         private System.Windows.Forms.DateTimePicker dtpDatePublished;
+        private System.Windows.Forms.Button btnGetPerCountry;
     }
 }
 

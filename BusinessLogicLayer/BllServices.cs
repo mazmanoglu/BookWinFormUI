@@ -17,9 +17,36 @@ namespace BusinessLogicLayer
             return countries;
         }
 
-        public void AddNewBook(Book book)
+        public bool AddNewBook(Book book)
         {
-            ds.AddNewBook(book);
+            bool ok = false;
+            try
+            {
+                if (book.DatePublished < DateTime.Now)
+                {
+                    ds.AddNewBook(book);
+                    ok = true;
+                    return ok;
+                }
+            }
+            catch (Exception ex)
+            {
+                ok = false;
+                return ok;
+            }
+
+            return ok;
+        }
+
+        public List<Book> GetBooks()
+        {
+            var books = ds.GetBooks();
+            return books;
+        }
+
+        public List<DtoBook> GetBooksByCountry(int id)
+        {
+            return ds.GetBooksByCountry(id);
         }
     }
 }
