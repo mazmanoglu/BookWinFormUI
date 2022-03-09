@@ -29,10 +29,11 @@ namespace BusinessLogicLayer
                     return ok;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ok = false;
-                return ok;
+                //return ok;
+                throw;
             }
 
             return ok;
@@ -47,6 +48,11 @@ namespace BusinessLogicLayer
         public List<DtoBook> GetBooksByCountry(int id)
         {
             return ds.GetBooksByCountry(id);
+        }
+
+        public void AddLog (string message)
+        {
+            ds.AddLog(message);
         }
     }
 }

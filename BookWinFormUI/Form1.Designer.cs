@@ -134,6 +134,7 @@
             this.dtgData.RowTemplate.Height = 24;
             this.dtgData.Size = new System.Drawing.Size(755, 159);
             this.dtgData.TabIndex = 10;
+            this.dtgData.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgData_CellContentDoubleClick);
             // 
             // btnAddBook
             // 
