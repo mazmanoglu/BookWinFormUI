@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BusinessLogicLayer;
 using BusinessObject;
@@ -18,16 +11,13 @@ namespace BookWinFormUI
         {
             InitializeComponent();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             BllServices bllServices = new BllServices();
             var allCountries = bllServices.GetCountries();
             cmbCountry.DataSource = allCountries;
             dtgData.DataSource = bllServices.GetBooks();
-
         }
-
         private void btnAddBook_Click(object sender, EventArgs e)
         {
             try
@@ -72,7 +62,6 @@ namespace BookWinFormUI
 
             }
         }
-
         private void btnGetPerCountry_Click(object sender, EventArgs e)
         {
             BllServices bllServices = new BllServices();
@@ -81,25 +70,75 @@ namespace BookWinFormUI
             dtgData.DataSource = null;
             dtgData.DataSource = books;
         }
-
         private void dtgData_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            string columnName = dtgData.Columns[e.ColumnIndex].ToString();
+            //string columnName = dtgData.Columns[e.ColumnIndex].ToString();
+
+            // First way
+            int selectedArea = dtgData.SelectedCells[0].RowIndex;
+            var rowSelected = dtgData.Rows[selectedArea];
+            txtTitle.Text = rowSelected.Cells["Title"].Value.ToString();
+            txtAuthor.Text = rowSelected.Cells["Author"].Value.ToString();
+            txtDescription.Text = rowSelected.Cells["Description"].Value.ToString();
+            txtPrice.Text = rowSelected.Cells["Price"].Value.ToString();
+            dtpDatePublished.Text = rowSelected.Cells["DatePublished"].Value.ToString();
+            cmbCountry.SelectedIndex = rowSelected.Cells["CountryId"].Value.GetHashCode() - 1;
+            //cmbCountry.SelectedIndex = Convert.ToInt32(rowSelected.Cells["CountryId"].Value.ToString()) - 1;
 
 
-            txtTitle.Text = dtgData.CurrentRow.Cells[1].Value.ToString();
-            txtDescription.Text = dtgData.CurrentRow.Cells[4].Value.ToString();
-            txtPrice.Text = dtgData.CurrentRow.Cells[3].Value.ToString();
-            txtAuthor.Text = dtgData.CurrentRow.Cells[2].Value.ToString();
-
-            string countryIDString = dtgData.CurrentRow.Cells[5].Value.ToString();
-            int countryId = Convert.ToInt32(countryIDString);
-            cmbCountry.SelectedIndex = countryId-1;
-
-
-            dtpDatePublished.Text = dtgData.CurrentRow.Cells[6].Value.ToString();
+            // second way
+            // txtTitle.Text = dtgData.CurrentRow.Cells[1].Value.ToString();
+            //txtDescription.Text = dtgData.CurrentRow.Cells[4].Value.ToString();
+            //txtPrice.Text = dtgData.CurrentRow.Cells[3].Value.ToString();
+            //txtAuthor.Text = dtgData.CurrentRow.Cells[2].Value.ToString();
+            //string countryIDString = dtgData.CurrentRow.Cells[5].Value.ToString();
+            //int countryId = Convert.ToInt32(countryIDString);
+            //cmbCountry.SelectedIndex = countryId-1;
+            //dtpDatePublished.Text = dtgData.CurrentRow.Cells[6].Value.ToString();
 
 
+            // third way
+            //var row = dtgData.Rows[e.RowIndex];
+            //txtTitle.Text = row.Cells["Title"].Value.ToString();
+            //txtAuthor.Text = row.Cells["Author"].Value.ToString();
+            //txtDescription.Text = row.Cells["Description"].Value.ToString();
+            //txtPrice.Text = row.Cells["Price"].Value.ToString();
+            //dtpDatePublished.Text = row.Cells["DatePublished"].Value.ToString();
+            //cmbCountry.SelectedIndex = Convert.ToInt32(row.Cells["CountryId"].Value.ToString()) - 1;
+            // cmbCountry.SelectedIndex = row.Cells["CountryId"].Value.GetHashCode()-1;
+        }
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BllServices bllServices = new BllServices();
+
+                Book newBook = new Book();
+                newBook.Title = txtTitle.Text;
+                newBook.Author = txtAuthor.Text;
+                newBook.Description = txtDescription.Text;
+                newBook.Price = decimal.Parse(txtPrice.Text);
+                newBook.DatePublished = Convert.ToDateTime(dtpDatePublished.Text);
+                newBook.CountryId = cmbCountry.SelectedIndex + 1;
+
+                if (bllServices.UpdateTheBook(newBook))
+                {
+                    MessageBox.Show("Database updated");
+                }
+                else
+                {
+                    MessageBox.Show("There is a problem on update. Try again.");
+                }
+
+                dtgData.DataSource = bllServices.GetBooks();
+            }
+            catch (Exception ex)
+            {
+                BllServices bllServices = new BllServices();
+                bllServices.AddLog(ex.Message);
+
+                MessageBox.Show("There is a problem with the APP.");
+            }
 
         }
     }

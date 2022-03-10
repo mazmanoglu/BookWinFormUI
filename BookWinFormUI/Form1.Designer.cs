@@ -44,6 +44,7 @@
             this.lblCountries = new System.Windows.Forms.Label();
             this.dtpDatePublished = new System.Windows.Forms.DateTimePicker();
             this.btnGetPerCountry = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -127,19 +128,22 @@
             // 
             // dtgData
             // 
+            this.dtgData.AllowUserToAddRows = false;
+            this.dtgData.AllowUserToDeleteRows = false;
             this.dtgData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgData.Location = new System.Drawing.Point(44, 213);
             this.dtgData.Name = "dtgData";
+            this.dtgData.ReadOnly = true;
             this.dtgData.RowHeadersWidth = 51;
             this.dtgData.RowTemplate.Height = 24;
-            this.dtgData.Size = new System.Drawing.Size(755, 159);
+            this.dtgData.Size = new System.Drawing.Size(755, 233);
             this.dtgData.TabIndex = 10;
             this.dtgData.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgData_CellContentDoubleClick);
             // 
             // btnAddBook
             // 
             this.btnAddBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddBook.Location = new System.Drawing.Point(44, 394);
+            this.btnAddBook.Location = new System.Drawing.Point(44, 468);
             this.btnAddBook.Name = "btnAddBook";
             this.btnAddBook.Size = new System.Drawing.Size(208, 48);
             this.btnAddBook.TabIndex = 11;
@@ -175,7 +179,7 @@
             // btnGetPerCountry
             // 
             this.btnGetPerCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGetPerCountry.Location = new System.Drawing.Point(294, 396);
+            this.btnGetPerCountry.Location = new System.Drawing.Point(294, 470);
             this.btnGetPerCountry.Name = "btnGetPerCountry";
             this.btnGetPerCountry.Size = new System.Drawing.Size(218, 46);
             this.btnGetPerCountry.TabIndex = 15;
@@ -183,11 +187,23 @@
             this.btnGetPerCountry.UseVisualStyleBackColor = true;
             this.btnGetPerCountry.Click += new System.EventHandler(this.btnGetPerCountry_Click);
             // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdate.Location = new System.Drawing.Point(553, 470);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(205, 46);
+            this.btnUpdate.TabIndex = 16;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 566);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnGetPerCountry);
             this.Controls.Add(this.dtpDatePublished);
             this.Controls.Add(this.lblCountries);
@@ -230,6 +246,7 @@
         private System.Windows.Forms.Label lblCountries;
         private System.Windows.Forms.DateTimePicker dtpDatePublished;
         private System.Windows.Forms.Button btnGetPerCountry;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }
 

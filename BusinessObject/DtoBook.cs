@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessObject
+﻿namespace BusinessObject
 {
     public class DtoBook //:Book da diyebiliriz. boylece book property'lerini yazmak zorunda kalmayiz ama burada yapmadik.
     {
@@ -13,6 +7,5 @@ namespace BusinessObject
         public string Author { get; set; }
         public decimal Price { get; set; }
         public Country CountryId { get; set; }
-
     }
 }

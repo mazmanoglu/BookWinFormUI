@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using System.Data.SqlClient;
 using System.Data;
@@ -12,7 +10,7 @@ namespace DataAccessLayer
 {
     public class DalServices
     {
-        public List<Country> GetCountries()
+        public IEnumerable<Country> GetCountries()
         {
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
@@ -20,7 +18,7 @@ namespace DataAccessLayer
                 return countries;
             }
         }
-        public List<Book> GetBooks()
+        public IEnumerable<Book> GetBooks()
         {
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
@@ -55,8 +53,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        
-        public List<DtoBook> GetBooksByCountry(int id)
+        public IEnumerable<DtoBook> GetBooksByCountry(int id)
         {
             DynamicParameters param = new DynamicParameters();
             param.Add ("@id", id);
@@ -73,7 +70,6 @@ namespace DataAccessLayer
                 return books;
             }
         }
-
         public void AddLog(string message)
         {
             DynamicParameters param = new DynamicParameters();
@@ -92,5 +88,24 @@ namespace DataAccessLayer
                 }
             }
         }
+        public void UpdateTheBook(Book book)
+        {
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@Id", book.Id);
+            param.Add("@Title", book.Title);
+            param.Add("@Author", book.Author);
+            param.Add("@Description", book.Description);
+            param.Add("@Price", book.Price);
+            param.Add("@CountryId", book.CountryId);
+            param.Add("@DatePublished", book.DatePublished);
+
+            using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
+            {
+                connection.Execute("spUpdateTheInfo", param, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }
+// readonly collections'lar icin IEnumerable interface'ini kullanmak daha pratik.
+// buradaki metodlari ilk basta List ile yapmistik ama simdi onlari IEnumerable ile degistiriyoruz.
+// mumkun oldugunca programinda interface kullan.
