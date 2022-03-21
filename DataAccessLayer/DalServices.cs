@@ -5,20 +5,22 @@ using System.Linq;
 using Dapper;
 using System.Data.SqlClient;
 using System.Data;
+using BusinessObject.Interfaces;
+using DataAccessLayer.Interfaces;
 
 namespace DataAccessLayer
 {
-    public class DalServices
+    public class DalServices : IDalServices
     {
-        public IEnumerable<Country> GetCountries()
+        public IEnumerable<ICountry> GetCountries()
         {
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
-                var countries = connection.Query<Country>("spGetAllCountries", commandType:CommandType.StoredProcedure).ToList();
+                var countries = connection.Query<Country>("spGetAllCountries", commandType: CommandType.StoredProcedure).ToList();
                 return countries;
             }
         }
-        public IEnumerable<Book> GetBooks()
+        public IEnumerable<IBook> GetBooks()
         {
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
@@ -26,7 +28,7 @@ namespace DataAccessLayer
                 return books;
             }
         }
-        public void AddNewBook(Book book)
+        public void AddNewBook(IBook book)
         {
             DynamicParameters param = new DynamicParameters();
             param.Add("@Title", book.Title);
@@ -56,17 +58,17 @@ namespace DataAccessLayer
         public IEnumerable<DtoBook> GetBooksByCountry(int id)
         {
             DynamicParameters param = new DynamicParameters();
-            param.Add ("@id", id);
+            param.Add("@id", id);
 
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
-                var books = connection.Query<DtoBook,Country,DtoBook>("spGetPerCountry",
-                    (dtobook, country) => 
+                var books = connection.Query<DtoBook, Country, DtoBook>("spGetPerCountry",
+                    (dtobook, country) =>
                     {
                         dtobook.CountryId = country;
                         return dtobook;
                     },
-                    param , commandType:CommandType.StoredProcedure).ToList();
+                    param, commandType: CommandType.StoredProcedure).ToList();
                 return books;
             }
         }
@@ -74,7 +76,7 @@ namespace DataAccessLayer
         {
             DynamicParameters param = new DynamicParameters();
             param.Add("@LogMessage", message);
-            
+
 
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
@@ -88,7 +90,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public void UpdateTheBook(Book book)
+        public void UpdateTheBook(IBook book)
         {
             DynamicParameters param = new DynamicParameters();
             param.Add("@Id", book.Id);

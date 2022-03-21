@@ -7,5 +7,10 @@
         public string Author { get; set; }
         public decimal Price { get; set; }
         public Country CountryId { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ID} {Title} {Author} {Price} {CountryId}";
+        }
     }
 }

@@ -16,5 +16,9 @@ namespace BusinessObject
         public string Description { get; set; }
         public int CountryId { get; set; }
         public DateTime DatePublished { get; set; }
+        public override string ToString()
+        {
+            return $"{Title} {Author} {Price} {Description} {CountryId} {DatePublished.ToShortDateString()}";
+        }
     }
 }

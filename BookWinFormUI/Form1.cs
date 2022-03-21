@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Windows.Forms;
 using BusinessLogicLayer;
+using BusinessLogicLayer.Interfaces;
 using BusinessObject;
+using BusinessObject.Interfaces;
 
 namespace BookWinFormUI
 {
     public partial class Form1 : Form
     {
+        IBllServices bllServices = new BllServices(); // bunu normalde tum butonlarin icine ayri ayri yazmistik
+        // kodu daha guzel hale getirmek icin buraya yazdik. digerlerini ayri ayri yazmaya ihtiyac kalmadi
+
         public Form1()
         {
             InitializeComponent();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            BllServices bllServices = new BllServices();
             var allCountries = bllServices.GetCountries();
             cmbCountry.DataSource = allCountries;
             dtgData.DataSource = bllServices.GetBooks();
@@ -22,9 +26,9 @@ namespace BookWinFormUI
         {
             try
             {
-                BllServices bllServices = new BllServices();
+                //IBllServices bllServices = new BllServices();
 
-                Book newBook = new Book();
+                IBook newBook = new Book();
                 newBook.Title = txtTitle.Text;
                 newBook.Author = txtAuthor.Text;
                 newBook.Description = txtDescription.Text;
@@ -51,7 +55,7 @@ namespace BookWinFormUI
             }
             catch (Exception ex)
             {
-                BllServices bllServices = new BllServices();
+                //IBllServices bllServices = new BllServices();
                 bllServices.AddLog(ex.Message);
 
                 // MessageBox.Show(ex.Message);
@@ -64,7 +68,7 @@ namespace BookWinFormUI
         }
         private void btnGetPerCountry_Click(object sender, EventArgs e)
         {
-            BllServices bllServices = new BllServices();
+            //IBllServices bllServices = new BllServices();
             var index = cmbCountry.SelectedIndex + 1;
             var books = bllServices.GetBooksByCountry(index);
             dtgData.DataSource = null;
@@ -114,6 +118,7 @@ namespace BookWinFormUI
                 BllServices bllServices = new BllServices();
 
                 Book newBook = new Book();
+                newBook.Id = Convert.ToInt32(dtgData.CurrentRow.Cells[0].Value.ToString());
                 newBook.Title = txtTitle.Text;
                 newBook.Author = txtAuthor.Text;
                 newBook.Description = txtDescription.Text;

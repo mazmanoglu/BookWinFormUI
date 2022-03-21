@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using BusinessLogicLayer.Interfaces;
 using BusinessObject;
+using BusinessObject.Interfaces;
 using DataAccessLayer;
+using DataAccessLayer.Interfaces;
 
 namespace BusinessLogicLayer
 {
-    public class BllServices
+    public class BllServices : IBllServices
     {
-        readonly DalServices ds = new DalServices();
-        public IEnumerable<Country> GetCountries()
+        readonly IDalServices ds = new DalServices();
+        public IEnumerable<ICountry> GetCountries()
         {
             var countries = ds.GetCountries();
             return countries;
         }
-        public bool AddNewBook(Book book)
+        public bool AddNewBook(IBook book)
         {
             bool ok = false;
             try
@@ -34,7 +37,7 @@ namespace BusinessLogicLayer
 
             return ok;
         }
-        public IEnumerable<Book> GetBooks()
+        public IEnumerable<IBook> GetBooks()
         {
             var books = ds.GetBooks();
             return books;
@@ -43,11 +46,11 @@ namespace BusinessLogicLayer
         {
             return ds.GetBooksByCountry(id);
         }
-        public void AddLog (string message)
+        public void AddLog(string message)
         {
             ds.AddLog(message);
         }
-        public bool UpdateTheBook(Book book)
+        public bool UpdateTheBook(IBook book)
         {
             bool ok = false;
             try
